@@ -9,6 +9,7 @@ export class ProductosService {
 
   cargando = true;
   productos: Producto[] = [];
+  productosFiltrado: Producto[] = [];
 
   constructor( private http: HttpClient) {
 
@@ -16,19 +17,17 @@ export class ProductosService {
 
    }
 
-
-
   private cargarProductos() {
 
     this.http.get('https://angular-html-a8b17.firebaseio.com/productos_idx.json')
     .subscribe( (resp: Producto[]) => {
-
-      console.log(resp);
       this.productos = resp;
       this.cargando = false;
-
     });
+  }
 
+  getProducto(id: string){
+    return this.http.get(`https://angular-html-a8b17.firebaseio.com/productos/${ id }.json`);
   }
 
 }
